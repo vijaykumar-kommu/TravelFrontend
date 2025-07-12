@@ -1,0 +1,113 @@
+<!-- booking.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Your Trip</title>
+    <link rel="stylesheet" href="booking.css" />
+  </head>
+  <body onload="animateForm()">
+    <section class="form-section">
+      <div class="glass-card form-card fade-in">
+        <h2>Travel Booking Form</h2>
+        <form id="bookingForm" novalidate>
+          <div class="form-group">
+            <input type="text" name="name" id="name" required placeholder=" " />
+            <label for="name">Full Name</label>
+            <span class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              placeholder=" "
+            />
+            <label for="email">Email</label>
+            <span class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              name="destination"
+              id="destination"
+              required
+              placeholder=" "
+            />
+            <label for="destination">Destination</label>
+            <span class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="date-label">Travel Start Date</label>
+            <input type="date" name="startDate" required placeholder=" " />
+          </div>
+
+          <div class="form-group">
+            <label class="date-label">Return Date</label>
+            <input type="date" name="endDate" required placeholder=" " />
+          </div>
+
+          <div class="form-group">
+            <textarea
+              name="preferences"
+              id="preferences"
+              placeholder=" "
+            ></textarea>
+            <label for="preferences">Any preferences?</label>
+          </div>
+
+          <button type="submit" class="btn">Book Now</button>
+
+          <div id="spinner" class="spinner hidden"></div>
+        </form>
+      </div>
+    </section>
+    <script src="script.js"></script>
+    <script>
+      document
+        .getElementById("bookingForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const spinner = document.getElementById("spinner");
+          spinner.classList.remove("hidden");
+
+          const formData = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            destination: document.getElementById("destination").value,
+            startDate: document.querySelector('input[name="startDate"]').value,
+            endDate: document.querySelector('input[name="endDate"]').value,
+            preferences: document.getElementById("preferences").value,
+          };
+
+          try {
+            const res = await fetch("http://localhost:5000/api/bookings", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+            });
+
+            const result = await res.json();
+            spinner.classList.add("hidden");
+
+            if (res.ok) {
+              alert("✅ Booking submitted successfully!");
+              document.getElementById("bookingForm").reset();
+            } else {
+              alert("❌ Failed to submit booking: " + result.message);
+            }
+          } catch (err) {
+            spinner.classList.add("hidden");
+            alert("❌ Error submitting booking");
+            console.error(err);
+          }
+        });
+    </script>
+  </body>
+</html>

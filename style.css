@@ -1,0 +1,144 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+
+body {
+  background: linear-gradient(135deg, #1e0033, #5a045e, #000000);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+/* Animate the background */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Layout */
+.hero, .form-section {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding : 30px 70px;
+}
+.btn{
+  padding: 5px 5px;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 0px;
+  border-color: white;
+  color: black;
+  background-color: whitesmoke;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: box-shadow 0.3s;
+  transition: colo 0.3s;
+  transition: background-color 0.3s;
+  
+}
+.btn:hover{
+  box-shadow:0px 0px 10px whitesmoke;
+  background-color: transparent;
+  color: aliceblue;
+}
+.para{
+  padding-bottom: 10px;
+}
+/* Shine container */
+.shine-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Shine overlay effect */
+.shine-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  transform: skewX(-25deg);
+  animation: shineSwipe 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Shine effect on glass-card */
+.glass-card {
+  position: relative; /* Required for ::before to align */
+  overflow: hidden;   /* Hide the shine outside bounds */
+  z-index: 0;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transform: skewX(-20deg);
+  animation: shineSwipe 3s ease-out;
+  animation: shineSwipe 10s ease-in infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Shine swipe animation */
+@keyframes shineSwipe {
+  0% {
+    left: -105%;
+  }
+  50% {
+    left: 195%;
+  }
+  100% {
+    left: 195%;
+  }
+}
+
